@@ -1,0 +1,8 @@
+{
+  "products": [
+    { "name": "Cashews", "price": "250" },
+    { "name": "Almonds", "price": "350" },
+    { "name": "Walnuts", "price": "300" },
+    { "name": "Pista", "price": "280" }
+  ]
+}
