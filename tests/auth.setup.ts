@@ -8,7 +8,7 @@ const authFile = path.join(__dirname, '../.auth/user.json');
 setup('authenticate via API', async () => {
   const apiContext = await request.newContext();
 
-  // Zameni sa svojim validnim kredencijalima za Conduit
+  
   const loginResponse = await apiContext.post('https://conduit-api.bondaracademy.com/api/users/login', {
     data: {
       user: {
