@@ -1,4 +1,9 @@
+import dotenv from 'dotenv';
+import path from 'path';
 import { test, expect } from '@playwright/test';
+
+// Load .env from the project root
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 test.describe('Conduit API - Direct Requests', () => {
   test('Get tags', async ({ request }) => {
@@ -13,8 +18,8 @@ test.describe('Conduit API - Direct Requests', () => {
     const loginResponse = await request.post('https://conduit-api.bondaracademy.com/api/users/login', {
       data: {
         user: {
-          email: 'your-email@example.com',
-          password: 'your-password',
+          email: process.env.CONDUIT_EMAIL,
+          password: process.env.CONDUIT_PASSWORD,
         },
       },
     });
