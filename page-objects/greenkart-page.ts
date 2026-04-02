@@ -13,24 +13,19 @@ export class GreenKartPage extends HelperBase {
   }
 
   async search(product: string) {
+    await this.searchInput.clear();
     await this.searchInput.pressSequentially(product, { delay: 100 });
-    
   }
 
-  /**
-   * Returns a locator for all visible products after a search.
-   * This is used in tests to assert the number of results.
-   */
   getVisibleProductsLocator(): Locator {
     return this.visibleProducts;
   }
 
   async addProductToCart(productName: string) {
     const product = this.visibleProducts.filter({ hasText: productName });
-    await product.locator('.product-action button').click();
+    await product.locator('.product-action button').first().click();
   }
 
-  // Optional: keep for backward compatibility, but prefer using toHaveCount in tests
   async getSearchResultCount(): Promise<number> {
     return await this.visibleProducts.count();
   }
@@ -39,6 +34,11 @@ export class GreenKartPage extends HelperBase {
     await this.cartIcon.click();
     await expect(this.cartPreview).toBeVisible();
   }
+
+  async closeCart() {
+  await this.page.keyboard.press('Escape'); // press Esc to close
+  await expect(this.cartPreview).not.toBeVisible();
+}
 
   async proceedToCheckoutPage() {
     await this.proceedToCheckout.click();
@@ -50,5 +50,15 @@ export class GreenKartPage extends HelperBase {
     await expect(
       this.cartPreview.locator('.cart-items .product-name')
     ).toContainText(productName);
+  }
+
+  async clearCart() {
+    // Clear localStorage and reload
+    await this.page.evaluate(() => {
+      localStorage.clear();
+      sessionStorage.clear();
+    });
+    await this.page.reload();
+    await this.page.waitForLoadState('networkidle');
   }
 }
