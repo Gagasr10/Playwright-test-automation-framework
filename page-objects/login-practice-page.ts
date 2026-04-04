@@ -26,9 +26,12 @@ export class LoginPracticePage extends HelperBase {
     await this.page.locator("#signInBtn").click();
   }
 
+  async selectUserRole(role: string) {
+    await this.page.locator("select.form-control").selectOption({ label: role });
+  }
+
   async getErrorMessage(): Promise<string> {
     const errorDiv = this.page.locator(".alert-danger");
-    // Wait for the error message to become visible (max 5 seconds)
     await errorDiv.waitFor({ state: "visible", timeout: 5000 });
     const text = (await errorDiv.textContent()) || "";
     return text.trim();
@@ -36,5 +39,34 @@ export class LoginPracticePage extends HelperBase {
 
   async verifyLoginSuccess() {
     await expect(this.page).toHaveURL(/shop/);
+  }
+
+  // New methods for radio buttons and checkbox
+  async selectAdminRadio() {
+    await this.page.locator('input[value="admin"]').check();
+  }
+
+  async selectUserRadio() {
+    await this.page.locator('input[value="user"]').check();
+  }
+
+  async isAdminRadioChecked(): Promise<boolean> {
+    return await this.page.locator('input[value="admin"]').isChecked();
+  }
+
+  async isUserRadioChecked(): Promise<boolean> {
+    return await this.page.locator('input[value="user"]').isChecked();
+  }
+
+  async checkTermsCheckbox() {
+    await this.page.locator("#terms").check();
+  }
+
+  async uncheckTermsCheckbox() {
+    await this.page.locator("#terms").uncheck();
+  }
+
+  async isTermsCheckboxChecked(): Promise<boolean> {
+    return await this.page.locator("#terms").isChecked();
   }
 }
