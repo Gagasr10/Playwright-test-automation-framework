@@ -10,7 +10,11 @@ export class LoginPracticePage extends HelperBase {
     await this.page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   }
 
-  async login(username: string, password: string, userType: "teacher" | "student" | "consultant") {
+  async login(
+    username: string,
+    password: string,
+    userType: "teacher" | "student" | "consultant",
+  ) {
     const dropdown = this.page.locator("select.form-control");
     if (userType === "teacher") {
       await dropdown.selectOption({ label: "Teacher" });
@@ -27,7 +31,9 @@ export class LoginPracticePage extends HelperBase {
   }
 
   async selectUserRole(role: string) {
-    await this.page.locator("select.form-control").selectOption({ label: role });
+    await this.page
+      .locator("select.form-control")
+      .selectOption({ label: role });
   }
 
   async getErrorMessage(): Promise<string> {
@@ -68,5 +74,9 @@ export class LoginPracticePage extends HelperBase {
 
   async isTermsCheckboxChecked(): Promise<boolean> {
     return await this.page.locator("#terms").isChecked();
+  }
+
+  async getSelectedUserRole(): Promise<string> {
+    return await this.page.locator("select.form-control").inputValue();
   }
 }
