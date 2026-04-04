@@ -10,30 +10,28 @@ export class LoginPracticePage extends HelperBase {
     await this.page.goto("https://rahulshettyacademy.com/loginpagePractise/");
   }
 
-  async login(
-    username: string,
-    password: string,
-    userType: "teacher" | "student",
-  ) {
+  async login(username: string, password: string, userType: "teacher" | "student" | "consultant") {
+    const dropdown = this.page.locator("select.form-control");
+    if (userType === "teacher") {
+      await dropdown.selectOption({ label: "Teacher" });
+    } else if (userType === "student") {
+      await dropdown.selectOption({ label: "Student" });
+    } else {
+      await dropdown.selectOption({ label: "Consultant" });
+    }
+
     await this.page.locator("#username").fill(username);
     await this.page.locator("#password").fill(password);
-    if (userType === "teacher") {
-      await this.page.locator('input[value="teach"]').check();
-    } else {
-      await this.page.locator('input[value="stud"]').check();
-    }
     await this.page.locator("#terms").check();
     await this.page.locator("#signInBtn").click();
   }
 
-  async selectUserRole(role: string) {
-    await this.page
-      .locator("select.form-control")
-      .selectOption({ label: role });
-  }
-
   async getErrorMessage(): Promise<string> {
-    return (await this.page.locator(".alert-danger").textContent()) || "";
+    const errorDiv = this.page.locator(".alert-danger");
+    // Wait for the error message to become visible (max 5 seconds)
+    await errorDiv.waitFor({ state: "visible", timeout: 5000 });
+    const text = (await errorDiv.textContent()) || "";
+    return text.trim();
   }
 
   async verifyLoginSuccess() {
