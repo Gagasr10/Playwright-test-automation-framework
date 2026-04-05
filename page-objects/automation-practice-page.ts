@@ -28,26 +28,46 @@ export class AutomationPracticePage extends HelperBase {
       .selectOption({ label: text });
   }
 
+  async isRadioSelected(value: string): Promise<boolean> {
+    return await this.page.locator(`input[value="${value}"]`).isChecked();
+  }
+
+  async isOptionChecked(value: string): Promise<boolean> {
+    return await this.page.locator(`input[value="${value}"]`).isChecked();
+  }
+
+  async getSelectedDropdownValue(): Promise<string> {
+    return await this.page.locator("#dropdown-class-example").inputValue();
+  }
+
   async handleAlertAndAccept(name: string) {
-    const dialogPromise = this.page.waitForEvent("dialog");
     await this.page.locator("#name").fill(name);
+    const dialogPromise = new Promise<void>((resolve) => {
+      this.page.once("dialog", async (dialog) => {
+        expect(dialog.message()).toBe(
+          `Hello ${name}, share this practice page and share your knowledge`,
+        );
+        await dialog.accept();
+        resolve();
+      });
+    });
     await this.page.locator("#alertbtn").click();
-    const dialog = await dialogPromise;
-    expect(dialog.message()).toBe(
-      `Hello ${name}, share this practice page and share knowledge`,
-    );
-    await dialog.accept();
+    await dialogPromise;
   }
 
   async handleConfirmAndAccept(name: string) {
-    const dialogPromise = this.page.waitForEvent("dialog");
     await this.page.locator("#name").fill(name);
+    const dialogPromise = new Promise<void>((resolve) => {
+      this.page.once("dialog", async (dialog) => {
+        expect(dialog.message()).toBe(
+          `Hello ${name}, Are you sure you want to confirm?`,
+        );
+        await dialog.accept();
+        resolve();
+      });
+    });
     await this.page.locator("#confirmbtn").click();
-    const dialog = await dialogPromise;
-    expect(dialog.message()).toBe(
-      `Hello ${name}, Are you sure you want to confirm?`,
-    );
-    await dialog.accept();
+    await dialogPromise;
   }
 
   async switchToIframe() {
@@ -62,17 +82,5 @@ export class AutomationPracticePage extends HelperBase {
       data.push(cells);
     }
     return data;
-  }
-
-  async isRadioSelected(value: string): Promise<boolean> {
-    return await this.page.locator(`input[value="${value}"]`).isChecked();
-  }
-
-  async isOptionChecked(value: string): Promise<boolean> {
-    return await this.page.locator(`input[value="${value}"]`).isChecked();
-  }
-
-  async getSelectedDropdownValue(): Promise<string> {
-    return await this.page.locator("#dropdown-class-example").inputValue();
   }
 }
