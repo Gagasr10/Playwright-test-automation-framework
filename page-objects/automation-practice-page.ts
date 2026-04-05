@@ -71,4 +71,8 @@ export class AutomationPracticePage extends HelperBase {
   async isOptionChecked(value: string): Promise<boolean> {
     return await this.page.locator(`input[value="${value}"]`).isChecked();
   }
+
+  async getSelectedDropdownValue(): Promise<string> {
+    return await this.page.locator("#dropdown-class-example").inputValue();
+  }
 }
