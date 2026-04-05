@@ -70,7 +70,7 @@ export class AutomationPracticePage extends HelperBase {
     await dialogPromise;
   }
 
-  async switchToIframe() {
+  switchToIframe() {
     return this.page.frameLocator("#courses-iframe");
   }
 
