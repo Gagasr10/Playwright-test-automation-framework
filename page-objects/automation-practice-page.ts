@@ -1,5 +1,5 @@
-import { Page, expect } from '@playwright/test';
-import { HelperBase } from './helper-base';
+import { Page, expect } from "@playwright/test";
+import { HelperBase } from "./helper-base";
 
 export class AutomationPracticePage extends HelperBase {
   constructor(page: Page) {
@@ -7,7 +7,7 @@ export class AutomationPracticePage extends HelperBase {
   }
 
   async goto() {
-    await this.page.goto('https://rahulshettyacademy.com/AutomationPractice/');
+    await this.page.goto("https://rahulshettyacademy.com/AutomationPractice/");
   }
 
   async selectRadio(value: string) {
@@ -23,38 +23,52 @@ export class AutomationPracticePage extends HelperBase {
   }
 
   async selectDropdownOption(text: string) {
-    await this.page.locator('#dropdown-class-example').selectOption({ label: text });
+    await this.page
+      .locator("#dropdown-class-example")
+      .selectOption({ label: text });
   }
 
   async handleAlertAndAccept(name: string) {
-    const dialogPromise = this.page.waitForEvent('dialog');
-    await this.page.locator('#name').fill(name);
-    await this.page.locator('#alertbtn').click();
+    const dialogPromise = this.page.waitForEvent("dialog");
+    await this.page.locator("#name").fill(name);
+    await this.page.locator("#alertbtn").click();
     const dialog = await dialogPromise;
-    expect(dialog.message()).toBe(`Hello ${name}, share this practice page and share knowledge`);
+    expect(dialog.message()).toBe(
+      `Hello ${name}, share this practice page and share knowledge`,
+    );
     await dialog.accept();
   }
 
   async handleConfirmAndAccept(name: string) {
-    const dialogPromise = this.page.waitForEvent('dialog');
-    await this.page.locator('#name').fill(name);
-    await this.page.locator('#confirmbtn').click();
+    const dialogPromise = this.page.waitForEvent("dialog");
+    await this.page.locator("#name").fill(name);
+    await this.page.locator("#confirmbtn").click();
     const dialog = await dialogPromise;
-    expect(dialog.message()).toBe(`Hello ${name}, Are you sure you want to confirm?`);
+    expect(dialog.message()).toBe(
+      `Hello ${name}, Are you sure you want to confirm?`,
+    );
     await dialog.accept();
   }
 
   async switchToIframe() {
-    return this.page.frameLocator('#courses-iframe');
+    return this.page.frameLocator("#courses-iframe");
   }
 
   async getTableData(): Promise<string[][]> {
-    const rows = await this.page.locator('table#product tr').all();
+    const rows = await this.page.locator("table#product tr").all();
     const data: string[][] = [];
     for (let i = 0; i < rows.length; i++) {
-      const cells = await rows[i].locator('td, th').allTextContents();
+      const cells = await rows[i].locator("td, th").allTextContents();
       data.push(cells);
     }
     return data;
+  }
+
+  async isRadioSelected(value: string): Promise<boolean> {
+    return await this.page.locator(`input[value="${value}"]`).isChecked();
+  }
+
+  async isOptionChecked(value: string): Promise<boolean> {
+    return await this.page.locator(`input[value="${value}"]`).isChecked();
   }
 }
