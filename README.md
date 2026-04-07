@@ -26,6 +26,7 @@ The framework follows industry best practices – Page Object Model, custom fixt
 | Conduit (API) | [API](https://conduit-api.bondaracademy.com) | Tags, create/delete article, mocking, modification |
 
 ## Project Structure
+```
 ├── .github
 │ └── workflows
 │ └── playwright.yml
@@ -69,6 +70,7 @@ The framework follows industry best practices – Page Object Model, custom fixt
 ├── package.json
 ├── .env.example
 └── README.md
+```
 
 
 
