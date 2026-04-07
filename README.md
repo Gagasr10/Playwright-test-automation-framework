@@ -26,31 +26,51 @@ The framework follows industry best practices – Page Object Model, custom fixt
 | Conduit (API) | [API](https://conduit-api.bondaracademy.com) | Tags, create/delete article, mocking, modification |
 
 ## Project Structure
-├── .github/workflows/ CI/CD pipeline (GitHub Actions)
-├── page-objects/ Page Object Model classes
-│ ├── helper-base.ts Base class with common helpers
-│ ├── greenkart-page.ts GreenKart page
-│ ├── cart-page.ts Cart page
-│ ├── checkout-page.ts Checkout form (for Login Practice)
-│ ├── login-practice-page.ts Login Practice page
-│ ├── automation-practice-page.ts Automation Practice page
-│ └── page-manager.ts Central access to all page objects
-├── tests/ Test specifications
-│ ├── api/ API tests (direct, mocking, modify)
-│ ├── auth.setup.ts Authentication setup for Conduit (local only)
-│ ├── greenkart/ UI tests for GreenKart
-│ ├── login-practice/ UI tests for Login Practice
-│ ├── automation-practice/ UI tests for Automation Practice
-│ └── mobile/ Mobile‑specific tests
-├── test-data/ Static JSON files for mocking
-├── test-options.ts Custom fixtures (pageManager)
-├── playwright.config.ts Playwright configuration
-├── Dockerfile + docker-compose.yml Containerised execution
-├── package.json Dependencies and npm scripts
-├── .env.example Environment variables template
-└── README.md This file
+├── .github
+│ └── workflows
+│ └── playwright.yml
+├── page-objects
+│ ├── helper-base.ts
+│ ├── greenkart-page.ts
+│ ├── cart-page.ts
+│ ├── checkout-page.ts
+│ ├── login-practice-page.ts
+│ ├── automation-practice-page.ts
+│ └── page-manager.ts
+├── tests
+│ ├── api
+│ │ ├── api-requests.spec.ts
+│ │ ├── api-mocking.spec.ts
+│ │ └── api-modify.spec.ts
+│ ├── auth.setup.ts
+│ ├── greenkart
+│ │ ├── search.spec.ts
+│ │ ├── cart.spec.ts
+│ │ └── checkout.spec.ts
+│ ├── login-practice
+│ │ ├── login.spec.ts
+│ │ ├── radio-checkbox.spec.ts
+│ │ └── user-roles.spec.ts
+│ ├── automation-practice
+│ │ ├── radio-checkbox.spec.ts
+│ │ ├── dropdown.spec.ts
+│ │ ├── alert-dialog.spec.ts
+│ │ ├── iframe.spec.ts
+│ │ └── table.spec.ts
+│ └── mobile
+│ └── mobile-search.spec.ts
+├── test-data
+│ ├── products.json
+│ └── tags.json
+├── test-options.ts
+├── playwright.config.ts
+├── Dockerfile
+├── docker-compose.yml
+├── package.json
+├── .env.example
+└── README.md
 
-text
+
 
 ## Prerequisites
 
