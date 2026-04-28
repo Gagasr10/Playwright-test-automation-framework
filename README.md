@@ -2,6 +2,8 @@
 [![Playwright Tests](https://github.com/Gagasr10/Playwright-test-automation-framework/actions/workflows/playwright.yml/badge.svg)](https://github.com/Gagasr10/Playwright-test-automation-framework/actions)
 [![Allure Report](https://img.shields.io/badge/Allure-Report-brightgreen)](https://gagasr10.github.io/Playwright-test-automation-framework/)
 
+[![Playwright Tests](https://github.com/Gagasr10/Playwright-test-automation-framework/actions/workflows/playwright.yml/badge.svg)](https://github.com/Gagasr10/Playwright-test-automation-framework/actions/workflows/playwright.yml)
+
 A complete end‑to‑end test automation framework built with **Playwright** and **TypeScript**.  
 It covers multiple demo websites: **GreenKart** (e‑commerce), **Login Practice**, **Automation Practice**, and **Conduit** (API).  
 The framework follows industry best practices – Page Object Model, custom fixtures, API testing, mobile emulation, Docker support, and CI/CD with GitHub Actions.
